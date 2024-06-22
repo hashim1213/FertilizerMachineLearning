@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Optimization</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .results-section {
+            margin-bottom: 20px;
+        }
+        .form-container, .results-container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Fertilizer Optimization for Canola using ML</h1>
+        <div class="row">
+            <div class="col-md-6 form-container">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="previous_yield">Previous Yield (bushels/acre):</label>
+                        <input type="number" step="any" class="form-control" id="previous_yield" name="previous_yield" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yield_goal">Yield Goal (bushels/acre):</label>
+                        <input type="number" step="any" class="form-control" id="yield_goal" name="yield_goal" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="OM">Soil Organic Matter (%):</label>
+                        <input type="number" step="any" class="form-control" id="OM" name="OM" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="use_soil_data">Use Soil Test Data?</label>
+                        <select class="form-control" id="use_soil_data" name="use_soil_data" required>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div id="soil-test-data" class="mt-3">
+                        <h3>Soil Test Data (lb/acre)</h3>
+                        <div class="form-group">
+                            <label for="soil_N">Soil N:</label>
+                            <input type="number" step="any" class="form-control" id="soil_N" name="soil_N">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soil_P2O5">Soil P<sub>2</sub>O<sub>5</sub>:</label>
+                            <input type="number" step="any" class="form-control" id="soil_P2O5" name="soil_P2O5">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soil_K2O">Soil K<sub>2</sub>O:</label>
+                            <input type="number" step="any" class="form-control" id="soil_K2O" name="soil_K2O">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soil_S">Soil S:</label>
+                            <input type="number" step="any" class="form-control" id="soil_S" name="soil_S">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <select class="form-control" id="location" name="location" required>
+                            <option value="rycroft">Rycroft</option>
+                            <option value="rycroft_west">Rycroft West</option>
+                            <option value="mclennan">McLennan</option>
+                            <option value="manning">Manning</option>
+                            <option value="fairview">Fairview</option>
+                            <option value="mclennan_south">McLennan South</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Calculate</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('add_data') }}" class="btn btn-secondary">Add Training Data</a>
+                </div>
+            </div>
+            <div class="col-md-6 results-container">
+                <div class="results">
+                    {% if results %}
+                        <div class="results-section alert alert-success">
+                            <h2>Optimal Fertilizer Blend</h2>
+                            <ul class="list-group">
+                                {% for fertilizer, amount in results.items() %}
+                                <li class="list-group-item">{{ fertilizer }}: {{ amount }} units</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        {% if rates %}
+                        <div class="results-section alert alert-info">
+                            <h2>Application Rates (lb/acre)</h2>
+                            <ul class="list-group">
+                                {% for fertilizer, rate in rates.items() %}
+                                <li class="list-group-item">{{ fertilizer }}: {{ rate }} lb/acre</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        {% if required_fertilizer %}
+                        <div class="results-section alert alert-warning">
+                            <h2>Fertilizer Requirements (lb/acre)</h2>
+                            <ul class="list-group">
+                                {% for nutrient, requirement in required_fertilizer.items() %}
+                                <li class="list-group-item">{{ nutrient }}: {{ requirement }} lb/acre</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Training Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .results-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Add Training Data</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="previous_yield">Previous Yield (bushels/acre):</label>
+                        <input type="number" step="any" class="form-control" id="previous_yield" name="previous_yield" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yield_goal">Yield Goal (bushels/acre):</label>
+                        <input type="number" step="any" class="form-control" id="yield_goal" name="yield_goal" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="OM">Soil Organic Matter (%):</label>
+                        <input type="number" step="any" class="form-control" id="OM" name="OM" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="soil_N">Soil N (lb/acre):</label>
+                        <input type="number" step="any" class="form-control" id="soil_N" name="soil_N" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="soil_P2O5">Soil P<sub>2</sub>O<sub>5</sub> (lb/acre):</label>
+                        <input type="number" step="any" class="form-control" id="soil_P2O5" name="soil_P2O5" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="soil_K2O">Soil K<sub>2</sub>O (lb/acre):</label>
+                        <input type="number" step="any" class="form-control" id="soil_K2O" name="soil_K2O" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="soil_S">Soil S (lb/acre):</label>
+                        <input type="number" step="any" class="form-control" id="soil_S" name="soil_S" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Ammonium_nitrate">Ammonium nitrate (units):</label>
+                        <input type="number" step="any" class="form-control" id="Ammonium_nitrate" name="Ammonium_nitrate" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Ammonium_sulfate">Ammonium sulfate (units):</label>
+                        <input type="number" step="any" class="form-control" id="Ammonium_sulfate" name="Ammonium_sulfate" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Anhydrous_ammonia">Anhydrous ammonia (units):</label>
+                        <input type="number" step="any" class="form-control" id="Anhydrous_ammonia" name="Anhydrous_ammonia" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Urea">Urea (units):</label>
+                        <input type="number" step="any" class="form-control" id="Urea" name="Urea" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Diammonium_phosphate">Diammonium phosphate (units):</label>
+                        <input type="number" step="any" class="form-control" id="Diammonium_phosphate" name="Diammonium_phosphate" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="MAP">MAP (units):</label>
+                        <input type="number" step="any" class="form-control" id="MAP" name="MAP" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Potassium_chloride">Potassium chloride (units):</label>
+                        <input type="number" step="any" class="form-control" id="Potassium_chloride" name="Potassium_chloride" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Potassium_sulfate">Potassium sulfate (units):</label>
+                        <input type="number" step="any" class="form-control" id="Potassium_sulfate" name="Potassium_sulfate" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Gypsum">Gypsum (units):</label>
+                        <input type="number" step="any" class="form-control" id="Gypsum" name="Gypsum" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <select class="form-control" id="location" name="location" required>
+                            <option value="rycroft">Rycroft</option>
+                            <option value="rycroft_west">Rycroft West</option>
+                            <option value="mclennan">McLennan</option>
+                            <option value="manning">Manning</option>
+                            <option value="fairview">Fairview</option>
+                            <option value="mclennan_south">McLennan South</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Add Data and Retrain Model</button>
+                </form>
+
+                <div class="results">
+                    {% if message %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Training Data</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Previous Yield</th>
+                            <th>Yield Goal</th>
+                            <th>OM</th>
+                            <th>Soil N</th>
+                            <th>Soil P2O5</th>
+                            <th>Soil K2O</th>
+                            <th>Soil S</th>
+                            <th>Location</th>
+                            <th>Ammonium nitrate</th>
+                            <th>Ammonium sulfate</th>
+                            <th>Anhydrous ammonia</th>
+                            <th>Urea</th>
+                            <th>Diammonium phosphate</th>
+                            <th>MAP</th>
+                            <th>Potassium chloride</th>
+                            <th>Potassium sulfate</th>
+                            <th>Gypsum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr>
+                            <td>{{ row.previous_yield }}</td>
+                            <td>{{ row.yield_goal }}</td>
+                            <td>{{ row.OM }}</td>
+                            <td>{{ row.soil_N }}</td>
+                            <td>{{ row.soil_P2O5 }}</td>
+                            <td>{{ row.soil_K2O }}</td>
+                            <td>{{ row.soil_S }}</td>
+                            <td>{{ row.location }}</td>
+                            <td>{{ row.Ammonium_nitrate }}</td>
+                            <td>{{ row.Ammonium_sulfate }}</td>
+                            <td>{{ row.Anhydrous_ammonia }}</td>
+                            <td>{{ row.Urea }}</td>
+                            <td>{{ row.Diammonium_phosphate }}</td>
+                            <td>{{ row.MAP }}</td>
+                            <td>{{ row.Potassium_chloride }}</td>
+                            <td>{{ row.Potassium_sulfate }}</td>
+                            <td>{{ row.Gypsum }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
