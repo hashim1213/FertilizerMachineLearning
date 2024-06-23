@@ -1,8 +1,8 @@
-#Fertilizer Optimization for Canola Using Machine Learning
+ #Fertilizer Optimization for Canola Using Machine Learning
 
-##Introduction
+ ##Introduction
 
-Optimize fertilizer blend for canola crops using historical yield data and soil test data.
+ Optimize fertilizer blend for canola crops using historical yield data and soil test data.
 
 
 
